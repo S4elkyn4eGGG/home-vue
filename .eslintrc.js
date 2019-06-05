@@ -5,7 +5,11 @@ module.exports = {
     node: true
   },
 
-  extends: ["plugin:vue/essential", "@vue/prettier"],
+  extends: [
+    'plugin:vue/essential',
+    '@vue/prettier',
+    '@vue/typescript'
+  ],
 
   rules: {
     "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
@@ -13,21 +17,15 @@ module.exports = {
     'prettier/prettier': [
       2,
       {
-        printWidth: 80,
+        printWidth: 100,
         singleQuote: true,
         semi: true,
-        trailingComma: "all",
+        trailingComma: "all"
       }
     ]
   },
 
   parserOptions: {
     parser: '@typescript-eslint/parser'
-  },
-
-  'extends': [
-    'plugin:vue/essential',
-    '@vue/prettier',
-    '@vue/typescript'
-  ]
+  }
 };

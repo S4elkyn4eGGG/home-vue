@@ -8,7 +8,7 @@ export default class Home extends Vue {}
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
-    <hello-world msg="Welcome to Your Vue.js + TypeScript App" />
+    <hello-world msg="Welcome t Your Vue.js + TypeScript App" />
   </div>
 </template>
 
@@ -17,6 +17,6 @@ p {
   color: red;
 }
 div {
-  color: white;
+  color: black;
 }
 </style>
