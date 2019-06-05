@@ -1,8 +1,8 @@
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+  import { Component, Vue } from 'vue-property-decorator';
 
 @Component
-export default class Home extends Vue {}
+  export default class Home extends Vue {}
 </script>
 
 <template>
@@ -13,10 +13,10 @@ export default class Home extends Vue {}
 </template>
 
 <style>
-p {
-  color: red;
-}
-div {
-  color: black;
-}
+  p {
+    color: red;
+  }
+  div {
+    color: black;
+  }
 </style>
