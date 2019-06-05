@@ -1,6 +1,6 @@
-import { ActionTree, Action } from 'vuex';
-import { RootState } from '@/types';
-import { IMain } from './model';
+import {ActionTree, Action} from 'vuex';
+import {RootState} from '@/types';
+import {IMain} from './model';
 
 export interface ActionTree<S, R> {
   [key: string]: Action<S, R>;
