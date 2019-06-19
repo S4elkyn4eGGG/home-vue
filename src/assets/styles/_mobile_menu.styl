@@ -6,7 +6,6 @@
 @media screen and (max-width: 639px) {
   .top-menu-container {
     z-index: 1000;
-    width: 90px;
     height: 100%;
     top: 0;
     left: 0;
@@ -14,35 +13,46 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    box-shadow: 0 2px 2px 2px rgba(0,0,0,0.5);
+    box-shadow: 0 2px 2px 2px #57bd7f;
     border-right: 2px solid #42b983;
+    background: white;
+
+    span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
     .desktop-menu {
-      height: 100%;
+      width: 70px;
+      transition: all 0.3s ease;
+
+      &:hover {
+        width: 20em;
+        transition: all 0.3s ease;
+
+        a {
+          justify-content: flex-start;
+          span {
+            display: inline-block;
+            animation: fadeIn 1s;
+          }
+
+          img {
+            display: none;
+            animation: fadeIn 1s;
+          }
+        }
+      }
 
       .nav-item {
-        width: 100%;
-        height: 100px;
+        width: 100%
+        height: 70px;
         border-bottom: 3px solid #42b983;
         transition: all 0.3s ease;
+
         &:first-child {
           border-top-width: 0;
-        }
-        &:hover {
-          height: 200px;
-          transition: all 0.3s ease;
-
-          a {
-            span {
-              display: inline-block;
-              animation: fadeIn 1s;
-            }
-
-            img {
-              display: none;
-              animation: fadeIn 1s;
-            }
-          }
         }
       }
 
@@ -54,10 +64,6 @@
 
         &:not(.router-link-exact-active):hover {
           background: rgba(0, 185, 74, 0.04);
-        }
-
-        &:hover {
-          justify-content: flex-start;
         }
 
         align-items: center;
