@@ -13,9 +13,24 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    align-items: center;
     box-shadow: 0 2px 2px 2px #57bd7f;
     border-right: 2px solid #42b983;
     background: white;
+
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: $mobile-menu-size;
+      height: $mobile-menu-size;
+      margin: 1em 0;
+
+      img {
+        width: 95%;
+        height: 95%;
+      }
+    }
 
     span {
       white-space: nowrap;
@@ -24,7 +39,7 @@
     }
 
     .desktop-menu {
-      width: 70px;
+      width: $mobile-menu-size;
       transition: all 0.3s ease;
 
       &:hover {
@@ -45,14 +60,27 @@
         }
       }
 
+      .burger-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%
+        height: $mobile-menu-size;
+
+        img {
+          width: 60%;
+          height: 60%;
+        }
+      }
+
       .nav-item {
         width: 100%
-        height: 70px;
+        height: $mobile-menu-size;
         border-bottom: 3px solid #42b983;
         transition: all 0.3s ease;
 
-        &:first-child {
-          border-top-width: 0;
+        &:nth-child(2) {
+          border-top: 3px solid #42b983;
         }
       }
 
@@ -82,7 +110,7 @@
 
         span {
           display: none;
-          padding: 20px;
+          padding: $menu-text-padding;
         }
 
         img {

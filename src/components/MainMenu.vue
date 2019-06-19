@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
 
   @Component
@@ -7,7 +7,13 @@
 
 <template>
   <div class="top-menu-container">
+    <div class="logo">
+      <img src="@/assets/logo.png"/>
+    </div>
     <div class="desktop-menu">
+      <div class="burger-icon">
+        <img src="@/assets/burger-icon.svg"/>
+      </div>
       <div class="nav-item">
         <router-link to="/" class="link">
           <img src="@/assets/logo.png">

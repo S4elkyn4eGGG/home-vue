@@ -1,3 +1,5 @@
+@import "_vars.styl"
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -14,8 +16,25 @@
     justify-content: flex-start;
     box-shadow: 0 2px 2px 2px #57bd7f;
     border-bottom: 2px solid #42b983;
-    height: 90px;
+    height: $top-menu-height;
     background: white;
+
+    .logo {
+      width: $top-menu-item-width;
+      margin: 0 3em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        width: 95%;
+        height: 95%;
+      }
+    }
+
+    .burger-icon {
+      display: none;
+    }
 
     span {
       white-space: nowrap;
@@ -30,15 +49,15 @@
 
       .nav-item {
         overflow: hidden
-        width: 100px;
+        width: $top-menu-item-width;
         height: 100%;
         border-right: 3px solid #42b983;
         transition: all 0.3s ease;
-        &:first-child {
-          border-left-width: 0;
+        &:nth-child(2) {
+          border-left: 3px solid #42b983;
         }
         &:hover {
-          width: 200px;
+          width: $top-menu-item-hover-width;
           transition: all 0.3s ease;
 
           a {
@@ -85,7 +104,7 @@
 
         span {
           display: none;
-          padding: 20px;
+          padding: $menu-text-padding;
         }
 
         img {
