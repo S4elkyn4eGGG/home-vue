@@ -15,8 +15,16 @@
 </template>
 
 <style lang="stylus">
-  .content-container {
-    padding-top 50px;
-    width: 100%;
+  @media screen and (min-width: 640px) {
+    .content-container {
+      padding-top 90px;
+      width: 100%;
+    }
+  }
+  @media screen and (max-width: 639px) {
+    .content-container {
+      padding-left 90px;
+      width: 100%;
+    }
   }
 </style>
