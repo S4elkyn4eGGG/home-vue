@@ -10,15 +10,13 @@
     <div class="desktop-menu">
       <div class="nav-item">
         <router-link to="/" class="link">
-          <div class="image-item">
-            <img src="@/assets/logo.png" class="icon">
-          </div>
+          <img src="@/assets/logo.png" class="icon">
           <span>Homes</span>
         </router-link>
       </div>
       <div class="nav-item">
         <router-link to="/about" class="link">
-          <div class="image-item"></div>
+          <img src="@/assets/logo.png" class="icon">
           <span>About</span>
         </router-link>
       </div>
@@ -27,12 +25,11 @@
 </template>
 
 <style scoped lang="stylus">
-  .icon {
-    width: calc(100% - 20px);
-    height: calc(100% - 20px);
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
   .out-container {
-    padding: 10px;
     z-index: 1000;
     width: 100%;
     top: 0;
@@ -41,6 +38,8 @@
     display: flex;
     justify-content: center;
     height: 90px;
+    box-shadow: 0 2px 2px 2px rgba(0,0,0,0.5);
+    border-bottom: 2px solid #42b983;
   }
   .desktop-menu {
     display: flex;
@@ -48,59 +47,60 @@
     flex-direction: row;
     align-items: center;
     flex-flow: nowrap;
-  }
-  .nav-item {
-    box-shadow: 0 0 3px 0 rgba(0,0,0,0.5);
-    border: 2px solid #42b983;
-    width: 100px;
-    height: 90px;
-    transition: all 0.3s ease;
-    &:first-child {
-      border-right-width: 0;
-    }
-    &:hover {
-      width: 200px;
+    height: 100%;
+    .nav-item {
+      border-right: 3px solid #42b983;
+      width: 100px;
+      height: 100%;
       transition: all 0.3s ease;
-      a {
-        span {
-          opacity: 1;
-          display: inline;
-          transition: all 1s ease;
-        }
-        div {
-          opacity: 0;
-          display: none;
-          transition: all 1s ease-;
+      &:first-child {
+        border-left-width: 0;
+      }
+      &:hover {
+        width: 200px;
+        transition: all 0.3s ease;
+        a {
+          span {
+            display: inline-block;
+            animation: fadeIn 1s;
+          }
+          img {
+            display: none;
+            animation: fadeIn 1s;
+          }
         }
       }
     }
-  }
-  .link {
-    display: block;
-    width: 100%;
-    height: 100%;
-    text-align: left;
-    text-decoration: none;
-    font-weight: bold;
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color #42b983
+    .link {
+      &.router-link-exact-active {
+        color #42b983
+      }
+      &:hover {
+        justify-content: flex-start;
+      }
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      height: 100%;
+      text-align: left;
+      text-decoration: none;
+      font-weight: bold;
+      font-family: 'Avenir', Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      color: #2c3e50;
+      span {
+        display: none;
+        padding: 20px;
+      }
     }
-    span {
-      opacity: 0;
-      display: none;
-      transition: all 1s ease;
-      padding: 20px;
+    .icon {
+      width: 50%;
+      height: 50%;
+      display: block;
+      animation: fadeIn 2s;
     }
-  }
-  .image-item {
-    width: 100%;
-    height: 100%;
-    opacity: 1;
-    display: block;
-    transition: all 1s ease;
   }
 </style>
