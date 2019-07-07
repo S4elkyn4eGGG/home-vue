@@ -1,7 +1,12 @@
 <script lang="ts">
   import { Component, Vue, Prop } from 'vue-property-decorator';
+  import clickOutside from '@/directives/click-ouside';
 
-  @Component
+  @Component({
+    directives: {
+      clickOutside,
+    },
+  })
   export default class MainMenu extends Vue {
     @Prop() private properties: any;
 
@@ -51,19 +56,19 @@
     };
 
     private get getDesktopNode (): Element | null {
-      return document.querySelector(`.top-menu-container--${this.prop.desktop.type}`);
+      return document.querySelector('.vue-easy-desktop-menu-container');
     }
 
     private get getMobileNode (): Element | null {
-      return document.querySelector(`.mobile-menu-container--${this.prop.mobile.type}`);
+      return document.querySelector('.vue-easy-mobile-menu-container');
     }
 
     private get getMobileClass (): string {
-      return `mobile-menu-container--${this.prop.mobile.type}`;
+      return `vue-easy-mobile-menu-container--${this.prop.mobile.type}`;
     }
 
     private get getDesktopClass (): string {
-      return `top-menu-container--${this.prop.desktop.type}`;
+      return `vue-easy-desktop-menu-container--${this.prop.desktop.type}`;
     }
 
     private get getDesktopProps (): any {
@@ -98,21 +103,32 @@
         (this.getMobileNode as HTMLElement).style.setProperty(`--top-menu-${itemStyle}`, this.prop.mobile.styles[itemStyle]);
       });
     }
+
+    private clickBurger () {
+      this.burgerOpen = !this.burgerOpen;
+    }
+
+    private clickBurgerOutside () {
+      this.burgerOpen = false;
+    }
+
+    private get getBurgerOpen (): boolean {
+      return this.burgerOpen;
+    }
+
+    private burgerOpen: boolean = false;
   }
 </script>
 
 <template>
   <div>
-    <div :class="getDesktopClass" class="desktop-visible">
+    <div :class="getDesktopClass" class="vue-easy-desktop-menu-container">
       <div class="logo">
         <router-link to="/" class="link">
           <img :src="prop.logo"/>
         </router-link>
       </div>
       <div class="main-menu">
-        <div class="burger-icon">
-          <img src="@/assets/burger-icon.svg"/>
-        </div>
         <div v-for="item in prop.items" :key="item.name" class="nav-item">
           <router-link :to="item.path" class="link">
             <img :src="item.icon">
@@ -121,12 +137,17 @@
         </div>
       </div>
     </div>
-    <div :class="getMobileClass">
+    <div :class="getMobileClass" class="vue-easy-mobile-menu-container">
       <div class="logo">
-        <img :src="prop.logo"/>
+        <router-link to="/" class="link">
+          <img :src="prop.logo"/>
+        </router-link>
       </div>
-      <div class="main-menu">
-        <div class="burger-icon">
+      <div class="main-menu"
+           :class="[getBurgerOpen ? 'burger-open': 'burger-close']">
+        <div class="burger-icon"
+             @click="clickBurger"
+             v-click-outside="clickBurgerOutside">
           <div>{{getMobileProps.title}}</div>
           <img src="@/assets/burger-icon.svg"/>
         </div>
