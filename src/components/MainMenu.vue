@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Component, Vue, Prop } from 'vue-property-decorator';
-  import clickOutside from '@/directives/click-ouside';
+  import clickOutside from '@/directives/click-outside';
 
   @Component({
     directives: {
@@ -29,11 +29,35 @@
           name: 'First',
           icon: require('@/assets/logo.png'),
           path: '/',
+          items: [
+            {
+              name: 'First',
+              icon: require('@/assets/logo.png'),
+              path: '/',
+            },
+            {
+              name: 'Second',
+              icon: require('@/assets/logo.png'),
+              path: '/about',
+            }
+          ],
         },
         {
           name: 'Second',
           icon: require('@/assets/logo.png'),
           path: '/about',
+          items: [
+            {
+              name: 'First',
+              icon: require('@/assets/logo.png'),
+              path: '/',
+            },
+            {
+              name: 'Second',
+              icon: require('@/assets/logo.png'),
+              path: '/about',
+            }
+          ],
         }
       ],
       desktop: {
@@ -128,14 +152,15 @@
           <img :src="prop.logo"/>
         </router-link>
       </div>
-      <div class="main-menu">
-        <div v-for="item in prop.items" :key="item.name" class="nav-item">
-          <router-link :to="item.path" class="link">
-            <img :src="item.icon">
-            <span>{{item.name}}</span>
-          </router-link>
-        </div>
-      </div>
+      <drop-down-item :prop="this.prop.items"></drop-down-item>
+      <!--<div class="main-menu">-->
+        <!--<div v-for="item in prop.items" :key="item.name" class="nav-item">-->
+          <!--<router-link :to="item.path" class="link">-->
+            <!--<img :src="item.icon">-->
+            <!--<span>{{item.name}}</span>-->
+          <!--</router-link>-->
+        <!--</div>-->
+      <!--</div>-->
     </div>
     <div :class="getMobileClass" class="vue-easy-mobile-menu-container">
       <div class="logo">
