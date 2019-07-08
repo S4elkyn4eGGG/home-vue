@@ -1,10 +1,12 @@
 <script lang="ts">
   import { Component, Vue, Prop } from 'vue-property-decorator';
   import clickOutside from '@/directives/click-outside';
+  import listWidth from '@/directives/list-width';
 
   @Component({
     directives: {
       clickOutside,
+      listWidth,
     },
   })
   export default class MainMenu extends Vue {
@@ -34,6 +36,13 @@
               name: 'First',
               icon: require('@/assets/logo.png'),
               path: '/',
+              items: [
+                {
+                  name: 'First',
+                  icon: require('@/assets/logo.png'),
+                  path: '/',
+                }
+              ],
             },
             {
               name: 'Second',
@@ -58,10 +67,23 @@
               path: '/about',
             }
           ],
+        },
+        {
+          name: 'Thirt',
+          icon: require('@/assets/logo.png'),
+          path: '/lol',
+          items: [
+            {
+              name: 'Thirt',
+              icon: require('@/assets/logo.png'),
+              path: '/lol',
+            }
+          ],
         }
       ],
       desktop: {
         type: 'slide',
+        openIcon: '▼',
         styles: {
           'height': '90px',
           'item-width': '100px',
@@ -140,6 +162,33 @@
       return this.burgerOpen;
     }
 
+    private itemsLength (item): boolean {
+      return item.items && item.items.length;
+    }
+
+    private dropDownDesktopMouseEnter (ev, item) {
+      this.openMenu = item.name;
+      this.openElementWidth = ev.target.clientWidth;
+    }
+
+    private openList (item): boolean {
+      return item.items && item.items.length && this.getOpenMenu === item.name;
+    }
+
+    private get getOpenMenu () {
+      return this.openMenu;
+    }
+
+    private get getOpenElementWidth () {
+      return this.openElementWidth;
+    }
+
+    private clickOutsideMenu () {
+      this.openMenu = '';
+    }
+
+    private openMenu: string = '';
+    private openElementWidth: number = null;
     private burgerOpen: boolean = false;
   }
 </script>
@@ -152,7 +201,7 @@
           <img :src="prop.logo"/>
         </router-link>
       </div>
-      <drop-down-item :prop="this.prop.items"></drop-down-item>
+      <!--<drop-down-item :prop="this.prop.items"></drop-down-item>-->
       <!--<div class="main-menu">-->
         <!--<div v-for="item in prop.items" :key="item.name" class="nav-item">-->
           <!--<router-link :to="item.path" class="link">-->
@@ -161,6 +210,39 @@
           <!--</router-link>-->
         <!--</div>-->
       <!--</div>-->
+      <div class="main-drop-down-menu">
+        <div v-for="item in prop.items"
+             :key="item.name"
+             class="drop-down-nav-item"
+             @mouseenter="dropDownDesktopMouseEnter($event, item)"
+             v-click-outside="clickOutsideMenu"
+        >
+          <router-link
+            :to="item.path"
+            class="drop-down-link"
+          >
+            <img :src="item.icon">
+            <span>{{item.name}}</span>
+            <div v-if="itemsLength(item)"
+                 :class="{'transform-open-icon': getOpenMenu === item.name}"
+                 class="drop-down-open-icon"
+            >
+              {{getDesktopProps.openIcon}}
+            </div>
+          </router-link>
+          <transition name="fade">
+            <div class="drop-down-list"
+                 v-if="openList(item)"
+                 v-list-width="getOpenElementWidth"
+            >
+              <drop-down-item
+                :prop="item.items"
+                :dropIcon="getDesktopProps.openIcon"
+              />
+            </div>
+          </transition>
+        </div>
+      </div>
     </div>
     <div :class="getMobileClass" class="vue-easy-mobile-menu-container">
       <div class="logo">

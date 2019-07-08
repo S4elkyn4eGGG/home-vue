@@ -6,106 +6,105 @@
   })
   export default class DropDownItem extends Vue {
     @Prop() private prop: any;
+    @Prop() private dropIcon: string;
+
+    private get getDropIcon (): string {
+      return this.dropIcon;
+    }
 
     private get getMenuItems () {
-      debugger;
       return this.prop;
     }
 
-    private mounted () {
-      this.isDropMenu = this.$parent.$options._componentTag === 'drop-down-item';
-    }
-    private menuMouseEnter (item) {
-      this.isOpenMenu = item.name;
+    private setOpenItem (item) {
+      this.openItem = item.name;
     }
 
-    private getIsOpen (item) {
-      return this.isOpenMenu === item.name;
+    private getItemsLength (item) {
+      return item.items && item.items.length;
     }
 
-    private get getIsDropMenu () {
-      return this.isDropMenu;
+    private get getOpenItem () {
+      return this.openItem;
     }
 
-    private isDropMenu: boolean = false;
-    private isOpenMenu: string = '';
+    private openItem: string = '';
   }
 </script>
 
 <template>
-  <div :class="[getIsDropMenu ? 'desktop-dropdown-sec' : 'desktop-dropdown']">
-    <div v-if="!getIsDropMenu" class="desktop-dropdown">
-      <div v-for="item in getMenuItems" :key="item.name" class="drop-item" @mouseenter="menuMouseEnter(item)">
-        <div>{{item.name}}</div>
-        <div class="drop-list" v-if="getIsOpen(item)">
-          <div v-for="itemMenu in item.items" :key="itemMenu.name" class="drop-list-item">
-            <drop-down-item :prop="itemMenu.items"></drop-down-item>
-          </div>
+  <div class="desktop-dropdown-list">
+    <div v-for="item in getMenuItems"
+         :key="item.name"
+         class="desktop-dropdown-list-item"
+         @mouseenter="setOpenItem(item)"
+    >
+      <router-link :to="item.path" class="drop-down-link">
+        <span>{{item.name}}</span>
+        <div v-if="getItemsLength(item)"
+             class="drop-down-icon"
+             :class="{'active-drop-down-icon': getOpenItem === item.name}"
+        >
+          {{getDropIcon}}
         </div>
-      </div>
-    </div>
-    <div v-else class="dropdown-list-menu">
-      <div v-for="item in getMenuItems" :key="item.name" class="drop-list-item" @mouseenter="menuMouseEnter(item)">
-        <div>{{item.name}}</div>
-        <div class="drop-list">
-          <div v-if="getIsOpen(item)">
-            <div v-for="itemMenu in item.items" :key="itemMenu.name" class="drop-list-item">
-              <div>{{itemMenu.name}}</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      </router-link>
     </div>
   </div>
 </template>
 
 <style scoped lang="stylus">
-  .drop-list-item {
-    width: 100%;
-    background: green;
-    height: 70px;
-  }
-
-  .drop-list-item-right {
-    width: 500px;
-    position: absolute;
-    height: 500px;
-  }
-
-  .desktop-dropdown {
+  .drop-down-link {
+    text-decoration: none;
+    color: var(--top-menu-item-text-color);
     display: flex;
     flex-direction: row;
-  }
-
-  .desktop-dropdown-sec {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-  }
-
-  .dropdown-list-menu {
-    width: 100%;
-    height: 100%;
-  }
-
-  .drop-item {
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    width: 100px;
-    height: 100%;
-    background: green;
+    width: 100%;
+    height: 100%
+
+    &.router-link-exact-active {
+      background: var(--top-menu-item-hover-background);
+      color var(--top-menu-item-active-color);
+    }
+
+    &:not(.router-link-exact-active):hover {
+      background: var(--top-menu-item-active-background);
+    }
   }
 
-  .drop-list {
-    z-index: 900;
-    top: 100px;
-    position: fixed;
+  .drop-down-icon {
+    margin: 0 10px;
+    transform: rotate(270deg);
+    transition: all 0.3s ease;
+  }
+
+  .active-drop-down-icon {
+    transform: rotate(90deg);
+    transition: all 0.3s ease;
+  }
+
+  .desktop-dropdown-list {
+    z-index: 1000;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    width: 100px;
+    border-left: var(--top-menu-item-border-color);
+    border-right: var(--top-menu-item-border-color);
+    box-shadow: var(--top-menu-box-shadow);
+  }
+
+  .desktop-dropdown-list-item {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: calc(var(--top-menu-height) / 1.5);
+    border-bottom: var(--top-menu-item-border-color);
+    background: var(--top-menu-item-active-background);
+
+    span {
+      padding-left: 10px;
+    }
   }
 </style>
