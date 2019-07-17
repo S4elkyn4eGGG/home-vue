@@ -2,6 +2,7 @@
   import { Component, Vue, Prop } from 'vue-property-decorator';
   import clickOutside from '@/directives/click-outside.vue';
   import listWidth from '@/directives/list-width.vue';
+  import { IProperties, IDesktop, IMobile } from '../assets/types/types';
 
   @Component({
     directives: {
@@ -12,8 +13,7 @@
   export default class MainMenu extends Vue {
     @Prop() private properties: any;
 
-    private prop = {
-      layout: 640,
+    private prop: IProperties = {
       logo: require('@/assets/logo.png'),
       colors: {
         'item-border-color': '3px solid #42b983',
@@ -141,11 +141,11 @@
       return `vue-easy-desktop-menu-container--${this.prop.desktop.type}`;
     }
 
-    private get getDesktopProps (): any {
+    private get getDesktopProps (): IDesktop {
       return this.prop.desktop;
     }
 
-    private get getMobileProps (): any {
+    private get getMobileProps (): IMobile {
       return this.prop.mobile;
     }
 

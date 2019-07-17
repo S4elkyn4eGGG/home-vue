@@ -27,7 +27,7 @@ module.exports = {
     'array-bracket-spacing': ['error', 'never', { 'singleValue': false, }],
     'indent': ['error', 2],
     'semi': [1, 'always'],
-    'no-unused-vars': ['error', { 'vars': 'all', 'args': 'after-used', 'ignoreRestSiblings': true, }],
+    'no-unused-vars': ['error', { 'vars': 'all', 'args': 'after-used', 'ignoreRestSiblings': true }],
   },
 
   overrides: [
@@ -38,9 +38,11 @@ module.exports = {
       },
     },
     {
-      'files': ['**/*.ts', '**/*.tsx'],
+      'files': ['**/*.ts', '**/*.tsx', '**/*.vue'],
       'rules': {
         'no-unused-vars': 'off',
+        "no-undef": 'off',
+        'typescript/no-unused-vars': 'off',
       },
     }
   ],
