@@ -229,6 +229,7 @@
           <img :src="prop.logo"/>
         </router-link>
       </div>
+      <!--SlideMenu-->
       <div v-if="getDesktopType === 'slide'" class="main-menu">
         <div v-for="item in prop.items" :key="item.name" class="nav-item">
           <router-link :to="item.path" class="link">
@@ -237,6 +238,8 @@
           </router-link>
         </div>
       </div>
+      <!---->
+      <!--DropDownMenu-->
       <div v-if="getDesktopType === 'drop-down'" class="main-menu">
         <div v-for="item in prop.items"
              :key="item.name"
@@ -272,12 +275,14 @@
         </div>
       </div>
     </div>
+    <!---->
     <div :class="getMobileClass" class="vue-easy-mobile-menu-container main-mobile">
       <div class="logo">
         <router-link to="/" class="link">
           <img :src="prop.logo"/>
         </router-link>
       </div>
+      <!--BurgerMenu-->
       <div class="main-menu"
            :class="[getBurgerOpen ? 'burger-open': 'burger-close']">
         <div class="burger-icon"
@@ -293,6 +298,7 @@
           </router-link>
         </div>
       </div>
+      <!---->
     </div>
   </div>
 </template>
