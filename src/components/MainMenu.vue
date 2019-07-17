@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Component, Vue, Prop } from 'vue-property-decorator';
-  import clickOutside from '@/directives/click-outside';
-  import listWidth from '@/directives/list-width';
+  import clickOutside from '@/directives/click-outside.vue';
+  import listWidth from '@/directives/list-width.vue';
 
   @Component({
     directives: {
@@ -106,7 +106,7 @@
         }
       ],
       desktop: {
-        type: 'slide',
+        type: 'drop-down',
         openIcon: '▼',
         styles: {
           'height': '90px',
@@ -149,16 +149,14 @@
       return this.prop.mobile;
     }
 
+    private get getDesktopType (): string {
+      return this.prop.desktop.type;
+    }
+
     private mounted () {
       this.setColors();
       this.setDesktopStyle();
       this.setMobileStyle();
-      this.setResponseWidth();
-    }
-
-    private setResponseWidth () {
-      (this.getDesktopNode as HTMLElement).style.setProperty('--response-width', `${this.prop.layout}px`);
-      (this.getMobileNode as HTMLElement).style.setProperty('--response-width', `${this.prop.layout}px`);
     }
 
     private setColors () {
@@ -218,29 +216,28 @@
     }
 
     private openMenu: string = '';
-    private openElementWidth: number = null;
+    private openElementWidth?: number;
     private burgerOpen: boolean = false;
   }
 </script>
 
 <template>
   <div>
-    <div :class="getDesktopClass" class="vue-easy-desktop-menu-container">
+    <div :class="getDesktopClass" class="vue-easy-desktop-menu-container main-desktop">
       <div class="logo">
         <router-link to="/" class="link">
           <img :src="prop.logo"/>
         </router-link>
       </div>
-      <!--<drop-down-item :prop="this.prop.items"></drop-down-item>-->
-      <!--<div class="main-menu">-->
-        <!--<div v-for="item in prop.items" :key="item.name" class="nav-item">-->
-          <!--<router-link :to="item.path" class="link">-->
-            <!--<img :src="item.icon">-->
-            <!--<span>{{item.name}}</span>-->
-          <!--</router-link>-->
-        <!--</div>-->
-      <!--</div>-->
-      <div class="main-drop-down-menu">
+      <div v-if="getDesktopType === 'slide'" class="main-menu">
+        <div v-for="item in prop.items" :key="item.name" class="nav-item">
+          <router-link :to="item.path" class="link">
+            <img :src="item.icon">
+            <span>{{item.name}}</span>
+          </router-link>
+        </div>
+      </div>
+      <div v-if="getDesktopType === 'drop-down'" class="main-menu">
         <div v-for="item in prop.items"
              :key="item.name"
              class="drop-down-nav-item"
@@ -275,7 +272,7 @@
         </div>
       </div>
     </div>
-    <div :class="getMobileClass" class="vue-easy-mobile-menu-container">
+    <div :class="getMobileClass" class="vue-easy-mobile-menu-container main-mobile">
       <div class="logo">
         <router-link to="/" class="link">
           <img :src="prop.logo"/>

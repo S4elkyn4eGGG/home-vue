@@ -1,0 +1,34 @@
+.main-mobile {
+  z-index: 1000;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  box-shadow: var(--top-menu-box-shadow);
+  border-right: var(--top-menu-border-bottom);
+  background: var(--top-menu-background);
+
+  .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--top-menu-size);
+    height: var(--top-menu-size);
+    margin: 1em 0;
+
+    img {
+      width: 95%;
+      height: 95%;
+    }
+  }
+
+  span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

@@ -1,8 +1,5 @@
 import Vue from 'vue';
-import HelloWorld from './HelloWorld.vue';
-import MainMenu from './MainMenu.vue';
-import DropDownItem from './DropDownItem.vue';
 
-Vue.component('hello-world', HelloWorld);
-Vue.component('main-menu', MainMenu);
-Vue.component('drop-down-item', DropDownItem);
+Vue.component('hello-world', () => import('./HelloWorld.vue'));
+Vue.component('main-menu', () => import('./MainMenu.vue'));
+Vue.component('drop-down-item', () => import('./DropDownItem.vue'));

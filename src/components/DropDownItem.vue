@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Component, Vue, Prop } from 'vue-property-decorator';
-  import listLeft from '@/directives/list-left';
+  import listLeft from '@/directives/list-left.vue';
 
   @Component({
     name: 'drop-down-item',
