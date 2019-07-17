@@ -216,7 +216,7 @@
     }
 
     private openMenu: string = '';
-    private openElementWidth?: number;
+    private openElementWidth: number | null = null;
     private burgerOpen: boolean = false;
   }
 </script>
