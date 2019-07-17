@@ -1,8 +1,12 @@
 <script lang="ts">
   import { Component, Vue, Prop } from 'vue-property-decorator';
+  import listLeft from '@/directives/list-left';
 
   @Component({
     name: 'drop-down-item',
+    directives: {
+      listLeft,
+    },
   })
   export default class DropDownItem extends Vue {
     @Prop() private prop: any;
@@ -16,8 +20,20 @@
       return this.prop;
     }
 
-    private setOpenItem (item) {
+    private setOpenItem (ev, item) {
       this.openItem = item.name;
+
+      let element = ev.currentTarget;
+
+      while (!element.classList.contains('drop-down-list') && !element.classList.contains('drop-down-right')) {
+        element = element.parentNode;
+
+        if (!element) {
+          break;
+        }
+      }
+
+      this.openElement = element;
     }
 
     private getItemsLength (item) {
@@ -28,6 +44,15 @@
       return this.openItem;
     }
 
+    private get getOpenElement (): HTMLElement {
+      return this.openElement;
+    }
+
+    private isChildItems (item): boolean {
+      return (this.getOpenItem === item.name) && item.items && item.items.length;
+    }
+
+    private openElement: any;
     private openItem: string = '';
   }
 </script>
@@ -37,22 +62,50 @@
     <div v-for="item in getMenuItems"
          :key="item.name"
          class="desktop-dropdown-list-item"
-         @mouseenter="setOpenItem(item)"
     >
       <router-link :to="item.path" class="drop-down-link">
         <span>{{item.name}}</span>
         <div v-if="getItemsLength(item)"
              class="drop-down-icon"
              :class="{'active-drop-down-icon': getOpenItem === item.name}"
+             @mouseenter.prevent="setOpenItem($event, item)"
         >
           {{getDropIcon}}
         </div>
       </router-link>
+      <transition name="drop-down-right">
+        <div class="drop-down-right"
+             v-if="isChildItems(item)"
+             v-list-left="getOpenElement"
+             v-list-width="getOpenElement.offsetWidth"
+        >
+          <drop-down-item
+            :prop="item.items"
+            :dropIcon="getDropIcon"
+            :key="item.name"
+          />
+        </div>
+      </transition>
     </div>
   </div>
 </template>
 
 <style scoped lang="stylus">
+  .drop-down-right {
+    position: fixed;
+    top: 95px;
+    display: flex;
+  }
+
+  .drop-down-right-enter, .drop-down-right-leave {
+    opacity: 0;
+    transition: all 0.5s ease;
+  }
+
+  .drop-down-right-enter-active, .drop-down-right-leave-active {
+    transition: all 0.5s ease;
+  }
+
   .drop-down-link {
     text-decoration: none;
     color: var(--top-menu-item-text-color);

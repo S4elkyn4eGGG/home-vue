@@ -33,36 +33,60 @@
           path: '/',
           items: [
             {
-              name: 'First',
+              name: 'First1',
               icon: require('@/assets/logo.png'),
               path: '/',
               items: [
                 {
-                  name: 'First',
+                  name: 'First2',
                   icon: require('@/assets/logo.png'),
                   path: '/',
+                  items: [
+                    {
+                      name: 'Lola',
+                      icon: require('@/assets/logo.png'),
+                      path: '/asfasfasf',
+                      items: [
+                        {
+                          name: 'Lola1',
+                          icon: require('@/assets/logo.png'),
+                          path: '/www',
+                        },
+                        {
+                          name: 'Lola2',
+                          icon: require('@/assets/logo.png'),
+                          path: '/ccc',
+                        }
+                      ],
+                    }
+                  ],
+                },
+                {
+                  name: 'First1Second2',
+                  icon: require('@/assets/logo.png'),
+                  path: '/asf',
                 }
               ],
             },
             {
-              name: 'Second',
+              name: 'First1Second1',
               icon: require('@/assets/logo.png'),
               path: '/about',
             }
           ],
         },
         {
-          name: 'Second',
+          name: 'Second1',
           icon: require('@/assets/logo.png'),
           path: '/about',
           items: [
             {
-              name: 'First',
+              name: 'Second1First1',
               icon: require('@/assets/logo.png'),
               path: '/',
             },
             {
-              name: 'Second',
+              name: 'Second1Second1',
               icon: require('@/assets/logo.png'),
               path: '/about',
             }
@@ -74,7 +98,7 @@
           path: '/lol',
           items: [
             {
-              name: 'Thirt',
+              name: 'Thirt1',
               icon: require('@/assets/logo.png'),
               path: '/lol',
             }
@@ -129,6 +153,12 @@
       this.setColors();
       this.setDesktopStyle();
       this.setMobileStyle();
+      this.setResponseWidth();
+    }
+
+    private setResponseWidth () {
+      (this.getDesktopNode as HTMLElement).style.setProperty('--response-width', `${this.prop.layout}px`);
+      (this.getMobileNode as HTMLElement).style.setProperty('--response-width', `${this.prop.layout}px`);
     }
 
     private setColors () {
@@ -238,6 +268,7 @@
               <drop-down-item
                 :prop="item.items"
                 :dropIcon="getDesktopProps.openIcon"
+                :key="item.name"
               />
             </div>
           </transition>
